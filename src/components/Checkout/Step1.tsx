@@ -1,5 +1,7 @@
 export default function Step1() {
 
+  // Comments test
+
   return (
     <section>
       <div className="flex flex-col gap-1 mb-4">
