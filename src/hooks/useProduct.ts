@@ -6,7 +6,7 @@ type CheckoutProps = {
   setProducts: (products: ItemProduct[]) => void;
 };
 
-export const useProduct = create<CheckoutProps>()((set, get) => ({
+export const useProduct = create<CheckoutProps>()((set) => ({
   products: [],
   setProducts: (products: ItemProduct[]) => set({ products }),
 }));

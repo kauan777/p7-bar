@@ -1,7 +1,6 @@
 import { MdAddCircleOutline } from "react-icons/md";
 import { valueToReal } from "../../../utils/convertToReal";
 import { ItemProduct, useCart } from "../../../hooks/useCart";
-import { toast } from "react-hot-toast";
 
 type Props = {
   product: ItemProduct;

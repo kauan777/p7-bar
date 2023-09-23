@@ -1,9 +1,7 @@
 import Home from "../../assets/icons/home.png";
-import Vendas from "../../assets/icons/vendas.png";
 import Pedidos from "../../assets/icons/pedidos.png";
 import Mensagens from "../../assets/icons/mensagens.png";
 import Configuracoes from "../../assets/icons/configuracoes.png";
-import Sair from "../../assets/icons/sair.png";
 import ItemSidebar from "./parts/item-sidebar.part";
 import { MdOutlineClose } from "react-icons/md";
 import Logo from "../Logo/logo.component";

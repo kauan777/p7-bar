@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BsChevronLeft, BsPersonFill } from "react-icons/bs";
 import { HiHome } from "react-icons/hi";
 import { MdPayment } from "react-icons/md";
@@ -11,12 +10,7 @@ import { useCheckout } from "../../hooks/useCheckout";
 import { Link } from "react-router-dom";
 
 export default function CheckoutScreen() {
-  const { step, setStep } = useCheckout();
-  const onChange = (nextStep: number) => {
-    setStep(nextStep < 0 ? 0 : nextStep > 3 ? 3 : nextStep);
-  };
-
-  const onNext = () => onChange(step + 1);
+  const { step } = useCheckout();
 
   return (
     <main className="flex flex-col h-screen px-6 max-w-[600px] mx-auto">
