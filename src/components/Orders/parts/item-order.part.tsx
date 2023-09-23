@@ -12,11 +12,11 @@ export default function ItemOrder({ product }: Props) {
 
   return (
     <div className="relative  w-full px-2 md:w-36 max-h-[300px] py-5 rounded-lg bg-white shadow-lg flex flex-col  items-center mx-2 mb-4">
-      <div className="rounded-full w-[90px] h-[90px] bg-tertiary p-2 flex justify-center items-center">
+      <div className="relative rounded-full w-[90px] h-[90px] bg-tertiary  flex justify-center items-center">
         <img
-          style={{ width: "100%", height: "100%" }}
+          style={{ width: 90, height: 90 }}
           src={product.image.url}
-          className="rounded-full object-cover"
+          className="rounded-full object-cover p-2"
         />
       </div>
       <div className="flex h-full flex-col mt-3 items-center justify-between text-center">
