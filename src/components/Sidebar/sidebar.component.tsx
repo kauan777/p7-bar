@@ -8,6 +8,8 @@ import ItemSidebar from "./parts/item-sidebar.part";
 import { MdOutlineClose } from "react-icons/md";
 import Logo from "../Logo/logo.component";
 import { useSidebar } from "../../hooks/useSidebar";
+import { BsInstagram, BsWhatsapp } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   const { isOpenSideBar, setIsOpenSideBar } = useSidebar();
@@ -31,21 +33,32 @@ export default function Sidebar() {
       </div>
       <div className="flex-col flex-grow justify-start mt-4 items-center pt-6">
         <ItemSidebar icon={Home} label="Home" active={true} />
-        <ItemSidebar icon={Vendas} label="Vendas" active={false} />
-        <ItemSidebar icon={Mensagens} label="Mensagens" active={false} />
-        <ItemSidebar icon={Pedidos} label="Pedidos" active={false} />
+        <ItemSidebar
+          icon={Mensagens}
+          label="Mensagens"
+          active={false}
+          isLocked
+        />
+        <ItemSidebar icon={Pedidos} label="Pedidos" active={false} isLocked />
         <ItemSidebar
           icon={Configuracoes}
           label="Configurações"
           active={false}
+          isLocked
         />
       </div>
-      <div className="flex justify-center flex-col mt-auto">
+      <Link to={"https://api.whatsapp.com/send?phone=5511946339136"} target="_blank" className="flex justify-center flex-col mt-auto">
         <div className="md:w-20 py-2 flex flex-col justify-center items-center">
-          <img src={Sair} className="w-6 h-6" />
-          <span className="text-xs text-gray-400 mt-1">Sair</span>
+          <BsWhatsapp color="#25D366" size={32} />
+          <span className="text-xs text-[#25D366] mt-1">Whatsapp</span>
         </div>
-      </div>
+      </Link>
+      <Link to={"https://www.instagram.com/p7_bars/"} target="_blank" className="flex mt-5 justify-center flex-col mt-auto">
+        <div className="md:w-20 py-2 flex flex-col justify-center items-center">
+          <BsInstagram color="#d32579" size={32} />
+          <span className="text-xs text-[#d32579] mt-1">Instagram</span>
+        </div>
+      </Link>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { useSidebar } from "../../hooks/useSidebar";
 
 export default function Header() {
   const { setIsOpenSideBar } = useSidebar();
-  const { setIsCartVisible } = useCart();
+  const { setIsCartVisible, cart } = useCart();
 
   return (
     <header className="fixed z-10 bg-white py-4 px-10 h-20  w-full flex items-center justify-between md:hidden">
@@ -16,7 +16,7 @@ export default function Header() {
       <Logo />
       <button className="relative" onClick={() => setIsCartVisible(true)}>
         <div className="flex items-center justify-center absolute -top-1 -right-2 bg-red-600 text-white text-center font-bold rounded-full text-[12px] w-5 h-5">
-          <span>2</span>
+          <span>{cart.length}</span>
         </div>
         <BsHandbag size={28} />
       </button>

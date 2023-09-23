@@ -1,14 +1,42 @@
 import SubtitleSection from "../SubtitleSection/subtitle-section.component";
 import ItemSubtotal from "./parts/item-subtotal.part";
-import Hamburguer from "../../assets/img/1.png";
-import Hamburguer2 from "../../assets/img/2.png";
-import Hamburguer3 from "../../assets/img/3.png";
-import Hamburguer4 from "../../assets/img/4.png";
 import { useCart } from "../../hooks/useCart";
 import { MdOutlineClose } from "react-icons/md";
+import AnimationEmpty from "./parts/animation-cart-empty";
+import { useEffect } from "react";
+import { valueToReal } from "../../utils/convertToReal";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderSidebar() {
-  const { isCartVisible, setIsCartVisible } = useCart();
+  const {
+    isCartVisible,
+    setIsCartVisible,
+    cart,
+    setCurrentOrder,
+    currentOrder,
+  } = useCart();
+
+  const navigate = useNavigate();
+
+  function addItems() {
+    setCurrentOrder({
+      ...currentOrder!,
+      items: cart,
+    });
+    navigate("/checkout");
+  }
+
+  useEffect(() => {
+    const newTotal = cart.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
+
+    setCurrentOrder({
+      ...currentOrder!,
+      total: Number(newTotal.toFixed(2)),
+    });
+  }, [cart]);
 
   return (
     <div
@@ -25,83 +53,46 @@ export default function OrderSidebar() {
           <MdOutlineClose size={32} />
         </button>
       </div>
-      <div className="flex flex-col mt-8 flex-grow ">
-        <div className="max-h-[250px] overflow-y-scroll">
-          <ItemSubtotal
-            title="Hambúrguer Triplo"
-            price="R$ 29,90"
-            img={Hamburguer}
-            total={1}
-            priceTotal="R$ 29,90"
-          />
-          <ItemSubtotal
-            title="Hambúrguer Cheese"
-            price="R$ 19,40"
-            img={Hamburguer2}
-            total={2}
-            priceTotal="R$ 38,80"
-          />
-          <ItemSubtotal
-            title="Hambúrguer Triplo 2"
-            price="R$ 34,50"
-            img={Hamburguer3}
-            total={1}
-            priceTotal="R$ 34,50"
-          />
-          <ItemSubtotal
-            title="Hambúrguer Frango"
-            price="R$ 29,90"
-            img={Hamburguer4}
-            total={1}
-            priceTotal="R$ 29,90"
-          />
-          <ItemSubtotal
-            title="Hambúrguer Frango"
-            price="R$ 29,90"
-            img={Hamburguer4}
-            total={1}
-            priceTotal="R$ 29,90"
-          />
-          <ItemSubtotal
-            title="Hambúrguer Frango"
-            price="R$ 29,90"
-            img={Hamburguer4}
-            total={1}
-            priceTotal="R$ 29,90"
-          />
-          <ItemSubtotal
-            title="Hambúrguer Frango"
-            price="R$ 29,90"
-            img={Hamburguer4}
-            total={1}
-            priceTotal="R$ 29,90"
-          />
-          <ItemSubtotal
-            title="Hambúrguer Frango"
-            price="R$ 29,90"
-            img={Hamburguer4}
-            total={1}
-            priceTotal="R$ 29,90"
-          />
-        </div>
-        <div className="flex flex-row justify-between mt-8">
-          <span className="text-xs font-bold">Sub Total</span>
-          <span className="text-xs font-bold">R$ 133,10</span>
-        </div>
-        <div className="flex flex-row justify-between mt-2">
-          <span className="text-xs font-light">Taxa (5%)</span>
-          <span className="text-xs font-light">R$ 6,65</span>
-        </div>
-      </div>
-      <div className="flex flex-col mb-16">
-        <a href="/checkout">
-          <button className="bg-primary p-3 w-full rounded-lg">
-            <span className="font-bold text-white text-lg">
-              Pagar R$ 133,10
+      {cart.length > 0 ? (
+        <>
+          <div className="flex flex-col mt-8 flex-grow ">
+            <div className="max-h-[250px] overflow-y-scroll">
+              {cart.map((product) => (
+                <ItemSubtotal key={product.id} product={product} />
+              ))}
+            </div>
+            <div className="flex flex-row justify-between mt-8">
+              <span className="text-xs font-bold">Sub Total</span>
+              <span className="text-xs font-bold">
+                {valueToReal(currentOrder!.total)}
+              </span>
+            </div>
+            <div className="flex flex-row justify-between mt-2">
+              <span className="text-xs font-light">Taxa de Entrega</span>
+              <span className="text-xs font-light">R$ 6,00</span>
+            </div>
+          </div>
+          <div className="flex flex-col mb-16">
+            <button
+              onClick={addItems}
+              className="bg-primary p-3 w-full rounded-lg"
+            >
+              <span className="font-bold text-white text-lg">
+                Pagar {valueToReal(currentOrder!.total + 6)}
+              </span>
+            </button>
+          </div>
+        </>
+      ) : (
+        <div className="relative flex-1 items-center justify-center">
+          <div className="absolute text-center top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2">
+            <AnimationEmpty />
+            <span className="mt-6 block font-bold w-full">
+              Seu carrinho está vazio
             </span>
-          </button>
-        </a>
-      </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
